@@ -52,6 +52,23 @@ router.post('/', (req, res) => {
   });
 });
 
+router.post('/login', (req, res) => {
+  // exprects {email: 'sample@email.com', password: 'password1234'}
+  User.findOne({
+    where: {
+      email: req.body.email
+    }
+  }).then(dbUserData => {
+    if (!dbUserData) {
+      res.status(400).json({ message: 'No user with that email address found.'});
+      return;
+    }
+    res.json({ user: dbUserData });
+
+    // verify user
+  });
+});
+
 // PUT: /api/users/1
 router.put('/:id', (req, res) => {
   // if req.body has exact key/value pairs to match the model, 
@@ -87,6 +104,7 @@ router.delete('/:id', (req, res) => {
       res.status(404).json({ message: 'No user found with this id.' });
       return;
     }
+    res.json(dbUserData);
   })
   .catch(err => {
     console.log(err);
