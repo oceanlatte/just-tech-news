@@ -65,12 +65,16 @@ router.post('/', (req, res) => {
     email: req.body.email,
     password: req.body.password
   })
-  .then(dbUserData => res.json(dbUserData))
-  .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
-  });
-});
+  .then(dbUserData => {
+    req.session.save(() => {
+      req.session.use_id = dbUserData.id;
+      req.session.username = dbUserData.username;
+      req.session.loggedIn = true;
+
+      res.json(dbUserData);
+    });
+  })
+})
 
 router.post('/login', (req, res) => {
   // exprects {email: 'sample@email.com', password: 'password1234'}
@@ -91,7 +95,14 @@ router.post('/login', (req, res) => {
       return;
     }
 
-    res.json({user: dbUserData._model, message: 'You are now logged in!'});
+    req.session.save(() => {
+      //declare session variables
+      req.session.user_id = dbUserData.id;
+      req.session.username = dbUserData.username;
+      req.session.loggedIn = true;
+    })
+
+    res.json({ user: dbUserData, message: 'You are now logged in!' });
   });
 });
 

@@ -4,8 +4,9 @@ const { Post, User, Comments } = require('../models');
 
 // file contains all the user-facing routes, like login and homepage
 
-// root route?
+// gets all posts for homepage
 router.get('/', (req, res) => {
+  console.log(req.session);
   Post.findAll({
     attributes: [
       'id', 
@@ -41,7 +42,25 @@ router.get('/', (req, res) => {
 
 // renders login
 router.get('/login', (req, res) => {
-  res.render('login');
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
+  else {
+    res.render('login');
+  }
+});
+
+
+router.post('/logout', (req, res) => {
+  if (req.session.loggedIn) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  }
+  else {
+    res.status(404).end();
+  }
 });
 
 module.exports = router;
