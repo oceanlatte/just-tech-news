@@ -16,15 +16,13 @@ async function loginFormHandler(event) {
 
     if (response.ok) {
       document.location.replace('/');
-    }
-    else {
+    } else {
       alert(response.statusText);
     }
   }
-  
 }
 
-async function signUpFormHandler(event) {
+async function signupFormHandler(event) {
   event.preventDefault();
 
   const username = document.querySelector('#username-signup').value.trim();
@@ -39,18 +37,17 @@ async function signUpFormHandler(event) {
         email,
         password
       }),
-      headers: { 'Content-Type': 'application/json'}
+      headers: { 'Content-Type': 'application/json' }
     });
 
-    // check response status
     if (response.ok) {
-      console.log('success!');
-    }
-    else {
+      document.location.replace('/');
+    } else {
       alert(response.statusText);
     }
   }
 }
 
 document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
-document.querySelector('.signup-form').addEventListener('submit', signUpFormHandler);
+
+document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
