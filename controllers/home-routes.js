@@ -4,7 +4,7 @@ const { Post, User, Comments } = require('../models');
 
 // file contains all the user-facing routes, like login and homepage
 
-
+// root route?
 router.get('/', (req, res) => {
   Post.findAll({
     attributes: [
@@ -37,6 +37,11 @@ router.get('/', (req, res) => {
     console.log(err);
     res.status(500).json(err);
   });
+});
+
+// renders login
+router.get('/login', (req, res) => {
+  res.render('login');
 });
 
 module.exports = router;

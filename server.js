@@ -1,13 +1,12 @@
-const express = require('express');
-const routes = require('./controllers');
-const sequelize = require('./config/connection'); // import from config folder
 const path = require('path');
+const express = require('express');
 const exphbs = require('express-handlebars');
-const hbs = exphbs.create({});
-
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+const sequelize = require('./config/connection'); // import from config folder
+const hbs = exphbs.create({});
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
@@ -22,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // turn on routes
-app.use(routes);
+app.use(require('./controllers/'));
 
 // establishes connection to db and server
 // 'sync' = Sequelize taking the models and connecting to associated db tables
