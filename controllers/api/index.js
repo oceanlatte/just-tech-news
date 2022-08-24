@@ -1,5 +1,6 @@
 // collect all of the API routes and package them together
 const router = require('express').Router();
+
 const userRoutes = require('./user-routes');
 const postRoutes = require('./post-routes');
 const commentRoutes = require('./comment-routes');

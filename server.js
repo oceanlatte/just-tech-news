@@ -21,19 +21,14 @@ const sess = {
 };
 
 app.use(session(sess));
-const hbs = exphbs.create({});
 
+const hbs = exphbs.create({});
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
-// express.json takes incoming POST data and parses into req.body JS obj
 app.use(express.json());
-// url encoded: takes incoming POST data and converts to key/value parirings
-// extended: true, lets express know there may be subarray w/in data so it looks deeper into the data
 app.use(express.urlencoded({ extended: false }));
-// required path at top and used in middleware to take all the contents of the
-// path 'public' and serve them as static assets
 app.use(express.static(path.join(__dirname, 'public')));
 
 // turn on routes

@@ -9,8 +9,9 @@ router.use('/api', apiRoutes);
 
 // if request is made to any endpoint that doesn't exist response is 404 error
 // this is a RESTful API practice
-router.use((req, res) => {
-  res.status(404).end();
-});
+// router.use((req, res) => {
+//   res.status(404).end();
+//   console.log('wrong route! oops!')
+// });
 
 module.exports = router;
